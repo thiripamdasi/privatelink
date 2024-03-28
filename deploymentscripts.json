@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "privateDnsZoneName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the private DNS zone."
+            }
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource ID of the virtual network."
+            }
+        },
+        "registrationEnabled": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Specifies if registration is enabled."
+            }
+        },
+        "virtualNetworkLinkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the virtual network link."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2021-02-01",
+            "name": "deployScript",
+            "properties": {
+                "scriptContent": "New-AzResourceGroupDeployment `
+    -ResourceGroupName $resourceGroupName `
+    -Name $deploymentName `
+    -TemplateFile $templateFilePath `
+    -privateDnsZoneName $privateDnsZoneName `
+    -virtualNetworkLinkName $virtualNetworkLinkName `
+    -virtualNetworkId $virtualNetworkId ",
+                "azCliVersion": "2.20.0",
+                "timeout": "PT1H",
+                "arguments": [
+                    "-privateDnsZoneName", "[parameters('privateDnsZoneName')]",
+                    "-virtualNetworkId", "[parameters('virtualNetworkId')]",
+                    "-registrationEnabled", "[parameters('registrationEnabled')]",
+                    "-virtualNetworkLinkName", "[parameters('virtualNetworkLinkName')]"
+                ]
+            }
+        }
+    ]
+}

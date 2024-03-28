@@ -1,0 +1,1 @@
+New-AzStorageAccount -ResourceGroupName privatelink-prac2 -Name practicestorage -Location centralus -SkuName Standard_LRS 

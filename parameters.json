@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "privateDnsZoneName": {
+            "value": "testingprivatedns.com"
+        },
+        "virtualNetworkLinkName": {
+            "value": "testingvnetlink"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/903a670d-9ae6-42f6-8495-12fd1d7e01cf/resourceGroups/privatelink-prac/providers/Microsoft.Network/virtualNetworks/vnet01"
+        }
+    }
+}

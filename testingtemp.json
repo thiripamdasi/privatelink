@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2020-10-01",
+            "name": "runPowerShellInline",
+            "location": "CentralUS",
+            "kind": "AzurePowerShell", // or "AzureCLI"
+            
+            "properties": {
+                "forceUpdateTag": "1",
+                
+                "azPowerShellVersion": "9.7", // or "azCliVersion": "2.47.0",
+                
+                "scriptContent": "
+                Connect-AzAccount -UseDeviceAuthentication 
+      New-AzStorageAccount -name practeststorage1 -ResourceGroupName privatelink-prac2 -SkuName Standard_LRS -location centralus -kind Storagev2",
+                "supportingScriptUris": [],
+                "timeout": "PT30M",
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "P1D"
+            }
+        }
+
+
+    ]
+
+}

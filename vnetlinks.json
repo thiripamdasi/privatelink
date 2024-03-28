@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "privateDnsZoneName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Private DNS Zone."
+            }
+        },
+        "virtualNetworkLinkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Virtual Network Link."
+            }
+        },
+        "virtualNetworkId": {
+            "type": "string",
+            "metadata": {
+                "description": "ID of the Virtual Network to link."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('privateDnsZoneName'), '/', parameters('virtualNetworkLinkName'))]",
+            "location": "global",
+            "properties": {
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', 'vnet01')]"
+                },
+                "registrationEnabled": true
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2020-10-01-preview",
+            "name": "exampleScript",
+            "location": "[parameters('location')]",
+            "kind": "AzurePowerShell",
+            "properties": {
+                "scriptContent": "deploy1.ps1",
+                "azCliVersion": "2.0.80",
+                "timeout": "PT1H",
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "P1D"
+            }
+        }
+    ]
+    
+}
