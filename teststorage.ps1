@@ -10,6 +10,8 @@ $storageAccountName = "practeststorage2"
 $location = "centralus"
 $skuName = "Standard_LRS"
 
+$body = $resourceGroupName | ConvertTo-Json -Depth 100
+
 # Check if the resource group exists, if not, create it
 # if (!(Get-AzResourceGroup -Name $resourceGroupName -ErrorAction SilentlyContinue)) {
 #     New-AzResourceGroup -Name $resourceGroupName -Location $location
